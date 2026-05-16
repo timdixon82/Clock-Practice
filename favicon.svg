@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Clock face -->
+  <circle cx="50" cy="50" r="46" fill="white" stroke="#C2410C" stroke-width="5"/>
+  <!-- Cardinal hour markers -->
+  <line x1="50" y1="9"  x2="50" y2="19" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="91" y1="50" x2="81" y2="50" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="50" y1="91" x2="50" y2="81" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="9"  y1="50" x2="19" y2="50" stroke="#0A2342" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Hour hand at 10:10 (305° from 12): x2=32, y2=37 -->
+  <line x1="50" y1="50" x2="32" y2="37" stroke="#0A2342" stroke-width="7" stroke-linecap="round"/>
+  <!-- Minute hand at :10 (60° from 12): x2=79, y2=33 -->
+  <line x1="50" y1="50" x2="79" y2="33" stroke="#C2410C" stroke-width="5" stroke-linecap="round"/>
+  <!-- Centre boss -->
+  <circle cx="50" cy="50" r="5" fill="#C2410C"/>
+</svg>

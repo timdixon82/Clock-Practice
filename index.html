@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#87CEEB">
 <title>Clock Practice</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
   /*
     Colour palette — every pair verified against WCAG 2.1:
@@ -39,10 +41,11 @@
   }
 
   h1 {
-    font-size: 2.4rem;
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
     margin: 10px 0 18px;
     text-align: center;
     color: #0A2342;
+    white-space: nowrap;
   }
 
   .stats {
@@ -104,9 +107,8 @@
     display: flex;
     gap: 16px;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
     margin-bottom: 18px;
-    flex-wrap: wrap;
   }
 
   .input-group {
@@ -298,13 +300,33 @@
     clip: rect(0,0,0,0);
     white-space: nowrap;
   }
+
+  /* On small phones, stack hour/colon/minutes vertically so the colon never sits alone */
+  @media (max-width: 540px) {
+    .input-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .colon {
+      font-size: 2rem;
+      padding-bottom: 0;
+      line-height: 1;
+    }
+  }
+
+  /* Scale the clock down a little on small screens */
+  @media (max-width: 360px) {
+    svg.clock { width: 270px; height: 270px; }
+    .clock-container { padding: 12px; }
+  }
 </style>
 </head>
 <body>
 
-<h1>🕐 Clock Practice 🕐</h1>
+<h1><span aria-hidden="true">🕐</span> Clock Practice <span aria-hidden="true">🕐</span></h1>
 
-<div class="stats">
+<div class="stats" role="group" aria-label="Game statistics">
   <div class="stat-box">
     <div class="stat-label">Tries This Clock</div>
     <div class="stat-value" id="attempts">0</div>
@@ -520,6 +542,7 @@
     for (let i = 0; i < 60; i++) {
       const c = document.createElement('div');
       c.className = 'confetti';
+      c.setAttribute('aria-hidden', 'true');
       c.style.left = Math.random() * 100 + '%';
       c.style.top = '-15px';
       c.style.background = colors[Math.floor(Math.random() * colors.length)];
