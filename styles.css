@@ -18,6 +18,7 @@
 */
 
 * { box-sizing: border-box; }
+
 html,
 body {
   margin: 0;
@@ -144,6 +145,7 @@ svg.clock {
 
 .number-btn:hover { background: #1E40AF; }
 .number-btn:active { transform: scale(0.95); }
+
 .number-btn:disabled {
   background: #475569;
   opacity: 0.7;
