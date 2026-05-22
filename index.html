@@ -41,37 +41,39 @@
 <div class="panel">
   <div class="input-row">
     <div class="input-group">
-      <label id="hour-label" for="hour-display">Hour</label>
+      <label id="hour-label">Hour</label>
       <div class="number-control" role="group" aria-labelledby="hour-label">
-        <button class="number-btn" aria-label="Decrease hour">−</button>
+        <button class="number-btn" type="button" aria-label="Decrease hour">−</button>
         <span class="number-display" id="hour-display" role="spinbutton"
+              aria-labelledby="hour-label"
               aria-valuemin="1" aria-valuemax="12" aria-valuenow="3"
               tabindex="0">3</span>
-        <button class="number-btn" aria-label="Increase hour">+</button>
+        <button class="number-btn" type="button" aria-label="Increase hour">+</button>
       </div>
     </div>
 
     <div class="colon" aria-hidden="true">:</div>
 
     <div class="input-group">
-      <label id="minute-label" for="minute-display">Minutes</label>
+      <label id="minute-label">Minutes</label>
       <div class="number-control" role="group" aria-labelledby="minute-label">
-        <button class="number-btn" aria-label="Decrease minutes by five">−</button>
+        <button class="number-btn" type="button" aria-label="Decrease minutes by five">−</button>
         <span class="number-display" id="minute-display" role="spinbutton"
+              aria-labelledby="minute-label"
               aria-valuemin="0" aria-valuemax="55" aria-valuenow="0"
               tabindex="0">00</span>
-        <button class="number-btn" aria-label="Increase minutes by five">+</button>
+        <button class="number-btn" type="button" aria-label="Increase minutes by five">+</button>
       </div>
     </div>
   </div>
 
-  <button class="primary" id="check-btn">Check My Answer</button>
+  <button class="primary" type="button" id="check-btn">Check My Answer</button>
 
   <div class="feedback empty" id="feedback" role="status" aria-live="assertive"></div>
 
   <div class="actions">
-    <button class="secondary" id="new-clock-btn">New Clock</button>
-    <button class="share" id="share-btn" disabled>Share with Mum &amp; Dad</button>
+    <button class="secondary" type="button" id="new-clock-btn">New Clock</button>
+    <button class="share" type="button" id="share-btn" disabled>Share with Mum &amp; Dad</button>
   </div>
 </div>
 
