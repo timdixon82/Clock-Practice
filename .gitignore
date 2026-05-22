@@ -1,0 +1,15 @@
+# Node.js development dependencies (installed locally for lint and CI checks).
+# The project has no build step; node_modules is never committed.
+node_modules/
+
+# npm artefacts
+npm-debug.log*
+.npm
+
+# macOS finder artefacts
+.DS_Store
+
+# Editor artefacts
+.vscode/
+*.swp
+*.swo

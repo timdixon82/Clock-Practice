@@ -1,0 +1,21 @@
+# Dependabot configuration.
+# Weekly grouped updates for GitHub Actions.
+# npm is included so that any future development dependency is tracked.
+# This project has no runtime npm dependencies (see docs/decisions/004-dependency-posture.md).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      javascript:
+        patterns: ["*"]
