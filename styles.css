@@ -18,7 +18,11 @@
 */
 
 * { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
@@ -51,7 +55,7 @@ h1 {
   background: white;
   padding: 12px 22px;
   border-radius: 14px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.18);
   text-align: center;
   min-width: 130px;
 }
@@ -74,7 +78,7 @@ h1 {
   background: white;
   border-radius: 50%;
   padding: 16px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.22);
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.22);
   margin-bottom: 26px;
 }
 
@@ -88,7 +92,7 @@ svg.clock {
   background: white;
   padding: 22px;
   border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.18);
   margin-bottom: 16px;
   width: 100%;
   max-width: 520px;
@@ -140,7 +144,11 @@ svg.clock {
 
 .number-btn:hover { background: #1E40AF; }
 .number-btn:active { transform: scale(0.95); }
-.number-btn:disabled { background: #475569; opacity: 0.7; cursor: not-allowed; }
+.number-btn:disabled {
+  background: #475569;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 
 .number-display {
   font-size: 2.5rem;
@@ -174,13 +182,22 @@ button.primary, button.secondary, button.share {
   margin-top: 6px;
 }
 
-button.primary { background: #15803D; color: white; }
+button.primary {
+  background: #15803D;
+  color: white;
+}
 button.primary:hover { background: #166534; }
 
-button.secondary { background: #FF6F00; color: #0A2342; }
+button.secondary {
+  background: #FF6F00;
+  color: #0A2342;
+}
 button.secondary:hover { background: #E55F00; }
 
-button.share { background: #6B21A8; color: white; }
+button.share {
+  background: #6B21A8;
+  color: white;
+}
 button.share:hover { background: #581C87; }
 
 button.primary:disabled,
@@ -190,8 +207,6 @@ button.share:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
-
-button:active:not(:disabled) { transform: scale(0.98); }
 
 /* High-contrast focus ring usable on any background */
 button:focus-visible,
@@ -262,6 +277,8 @@ button:focus-visible,
   min-width: 140px;
 }
 
+button:active:not(:disabled) { transform: scale(0.98); }
+
 .confetti {
   position: fixed;
   width: 12px;
@@ -272,7 +289,10 @@ button:focus-visible,
 }
 
 @keyframes fall {
-  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 /* Reduced motion */
@@ -286,19 +306,21 @@ button:focus-visible,
 
 .visually-hidden {
   position: absolute;
-  width: 1px; height: 1px;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
   clip: rect(0,0,0,0);
   white-space: nowrap;
 }
 
 /* On small phones, stack hour/colon/minutes vertically so the colon never sits alone */
-@media (max-width: 540px) {
+@media (width <= 540px) {
   .input-row {
     flex-direction: column;
     align-items: center;
     gap: 8px;
   }
+
   .colon {
     font-size: 2rem;
     padding-bottom: 0;
@@ -307,7 +329,11 @@ button:focus-visible,
 }
 
 /* Scale the clock down a little on small screens */
-@media (max-width: 360px) {
-  svg.clock { width: 270px; height: 270px; }
+@media (width <= 360px) {
+  svg.clock {
+    width: 270px;
+    height: 270px;
+  }
+
   .clock-container { padding: 12px; }
 }
