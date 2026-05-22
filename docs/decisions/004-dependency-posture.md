@@ -14,12 +14,14 @@ This record reviews what Clock-Practice actually depends on, so the dependency p
 
 Clock-Practice has zero third-party runtime dependencies, and it should stay that way unless a real need arrives.
 
-A review of the repository confirms the posture:
+This record governs runtime dependencies: any script, stylesheet, or font that the browser loads when a visitor opens the page. Clock-Practice loads none from a third party. Its development tooling is separate and is not covered by the zero-dependency rule. The three linters (`html-validate`, `stylelint`, and `eslint`), the shared configuration `stylelint-config-standard`, and the browser-globals package `globals` are pinned in a `package.json` and a `package-lock.json`. That manifest is used only by continuous integration and by developers. Nothing in it is ever shipped to the browser. Decision Record 005 records why the manifest exists.
+
+A review of the repository confirms the runtime posture:
 
 - No script is loaded from another origin. The page does not include any `<script src>` pointing at a content delivery network or any other site. All JavaScript is the project's own, written inline in `index.html` today.
 - No stylesheet is loaded from another origin. There is no `<link rel="stylesheet">` to a font service or a CSS framework. All CSS is the project's own.
 - No web font is loaded from another origin. The page uses a system-font stack (`-apple-system`, `BlinkMacSystemFont`, `"Segoe UI"`, `system-ui`, `sans-serif`), so the fonts are whatever the visitor's device already has. Nothing is fetched.
-- No package is installed from a package registry. There is no `package.json` and no lockfile. Consistent with the no-build-step decision (Decision Record 002).
+- No runtime package is installed from a package registry. The `package.json` and `package-lock.json` at the repository root list development tooling only: the linters and their shared configuration. They install nothing that the browser loads, and they add no build step (see Decision Record 002 and Decision Record 005).
 - The favicon, `favicon.svg`, is the project's own file, committed to the repository. It is a hand-written Scalable Vector Graphics (SVG) drawing of a clock face. It is served from the project's own origin, not fetched from anywhere. It is not a third-party resource.
 - The clock dial itself is drawn at run time by the project's own JavaScript, building SVG elements. No image library and no charting library is involved.
 - The two browser interfaces the page uses, the Web Share interface (`navigator.share`) and the Clipboard interface (`navigator.clipboard`), are built into the browser. They are platform features, not dependencies, and they need no script to be loaded.
@@ -40,7 +42,7 @@ Rejected as out of architecture scope, and not needed. The system-font stack mea
 
 ## Consequences
 
-- Dependabot has nothing to scan for Clock-Practice, which is the expected state for a static project with no package manifest. The global foundations decision already anticipated this.
+- Dependabot has no runtime dependency to scan for Clock-Practice, which is the expected state for a static project. It does have the development lint manifest to watch: the `package.json` and `package-lock.json` make the linter toolchain visible, so Dependabot can flag a vulnerable or outdated linter. That is a stronger supply-chain posture than an unpinned toolchain, not a weaker one. Decision Record 005 records this.
 - The Subresource Integrity rule in the stack standard does not apply today, because there is no third-party script to pin. If a third-party script is ever added, it must be pinned with Subresource Integrity and its origin added to the Content-Security-Policy, and this record must be revisited.
 - The zero-dependency posture is what lets Decision Record 003 keep the Content-Security-Policy tight on `'self'`. Adding any third-party resource later would force a change to both this record and the Content-Security-Policy.
 - The favicon is confirmed as a first-party project asset. No licensing or supply-chain question attaches to it.

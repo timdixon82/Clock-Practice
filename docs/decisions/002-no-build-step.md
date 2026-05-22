@@ -16,6 +16,8 @@ Clock-Practice has no build step. The repository source is the deployed site.
 
 This holds whether the page stays as one file or is later split into three files (see Decision Record 001). Three plain files, one HTML, one CSS, and one JavaScript, are still served directly with no build step. A build step would only be needed if the project later took on something that must be transformed before a browser can use it, such as a JavaScript package installed from a package registry, a CSS pre-processor, or a framework.
 
+A development-only lint manifest is not a build step. Clock-Practice has a `package.json` and a `package-lock.json` whose only job is to pin the project's linters for continuous integration and for developers (see Decision Record 005). That manifest installs no runtime package and transforms nothing. The deployed site is still the exact HyperText Markup Language (HTML), Cascading Style Sheets (CSS), and JavaScript in the repository. Periodic-Table, the reference static project, has both a "No build step" decision and a development lint manifest, and the two coexist without contradiction.
+
 ## Alternatives considered
 
 ### Add a light bundler, such as Vite
