@@ -25,12 +25,24 @@ jobs:
           node-version: lts/*
 
       - name: Install accessibility tools
-        run: npm install -g pa11y @axe-core/cli wait-on browser-driver-manager
+        run: npm install -g pa11y @axe-core/cli@4.11.3 wait-on@8.0.1 browser-driver-manager@2.0.1
 
-      - name: Install matching Chrome and ChromeDriver versions
+      - name: Install matching ChromeDriver for axe-core
         # @axe-core/cli requires ChromeDriver that matches the installed Chrome.
         # browser-driver-manager installs a matching pair.
-        run: npx browser-driver-manager install chrome
+        run: |
+          npx browser-driver-manager install chrome
+          # Export BDM's chromedriver to GITHUB_PATH so subsequent steps
+          # find it before the system ChromeDriver (which may be a different version).
+          bdm_bin=$(find "$HOME/.browser-driver-manager" -name "chromedriver" -type f 2>/dev/null | head -1)
+          if [ -n "$bdm_bin" ]; then
+            echo "$(dirname "$bdm_bin")" >> "$GITHUB_PATH"
+          fi
+
+      - name: Build CI pa11y config with system Chrome path
+        run: |
+          CHROME=$(which google-chrome-stable 2>/dev/null || which google-chrome 2>/dev/null || which chromium 2>/dev/null)
+          jq --arg chrome "$CHROME" '.chromeLaunchConfig.executablePath = $chrome' pa11y.json > pa11y.ci.json
 
       - name: Serve the site
         run: python3 -m http.server 8080 &
@@ -43,7 +55,7 @@ jobs:
         # chromeLaunchConfig.args to include --no-sandbox. This is required
         # because GitHub Actions runners execute as root in a Docker container,
         # where Chromium refuses to run without --no-sandbox.
-        run: pa11y --standard WCAG2AAA "http://localhost:8080"
+        run: pa11y --standard WCAG2AAA --config pa11y.ci.json "http://localhost:8080"
 
       - name: axe-core at WCAG 2.2 AAA
         # --chrome-options="no-sandbox" passes --no-sandbox to the Chromium
