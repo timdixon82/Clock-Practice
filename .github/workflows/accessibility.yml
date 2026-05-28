@@ -25,12 +25,41 @@ jobs:
           node-version: lts/*
 
       - name: Install accessibility tools
-        run: npm install -g pa11y @axe-core/cli wait-on browser-driver-manager
+        run: npm install -g pa11y @axe-core/cli@4.11.3 wait-on@8.0.1
 
-      - name: Install matching Chrome and ChromeDriver versions
-        # @axe-core/cli requires ChromeDriver that matches the installed Chrome.
-        # browser-driver-manager installs a matching pair.
-        run: npx browser-driver-manager install chrome
+      - name: Install matching ChromeDriver for axe-core
+        run: |
+          # Detect the full Chrome version from the binary ChromeDriver uses.
+          # Probe in the same order ChromeDriver checks binaries.
+          CHROME_FULL=""
+          for chrome_bin in /opt/google/chrome/chrome /opt/google/chrome/google-chrome \
+              /usr/bin/google-chrome /usr/bin/google-chrome-stable; do
+            if [ -x "$chrome_bin" ]; then
+              CHROME_FULL=$("$chrome_bin" --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+              break
+            fi
+          done
+          if [ -z "$CHROME_FULL" ]; then
+            echo "WARNING: Could not detect Chrome version; axe will use system ChromeDriver." && exit 0
+          fi
+          echo "Detected Chrome ${CHROME_FULL}."
+          mkdir -p "$HOME/chromedriver-matching"
+          if curl -sfL \
+              "https://storage.googleapis.com/chrome-for-testing-public/${CHROME_FULL}/linux64/chromedriver-linux64.zip" \
+              -o /tmp/chromedriver.zip; then
+            unzip -q /tmp/chromedriver.zip -d /tmp/chromedriver-extract
+            install -m 0755 /tmp/chromedriver-extract/chromedriver-linux64/chromedriver \
+              "$HOME/chromedriver-matching/chromedriver"
+            echo "CHROMEDRIVER_PATH=$HOME/chromedriver-matching/chromedriver" >> "$GITHUB_ENV"
+            echo "Installed ChromeDriver ${CHROME_FULL}."
+          else
+            echo "WARNING: CDN download failed; axe will use system ChromeDriver."
+          fi
+
+      - name: Build CI pa11y config with system Chrome path
+        run: |
+          CHROME=$(which google-chrome-stable 2>/dev/null || which google-chrome 2>/dev/null || which chromium 2>/dev/null)
+          jq --arg chrome "$CHROME" '.chromeLaunchConfig.executablePath = $chrome' pa11y.json > pa11y.ci.json
 
       - name: Serve the site
         run: python3 -m http.server 8080 &
@@ -43,10 +72,15 @@ jobs:
         # chromeLaunchConfig.args to include --no-sandbox. This is required
         # because GitHub Actions runners execute as root in a Docker container,
         # where Chromium refuses to run without --no-sandbox.
-        run: pa11y --standard WCAG2AAA "http://localhost:8080"
+        run: pa11y --standard WCAG2AAA --config pa11y.ci.json "http://localhost:8080"
 
       - name: axe-core at WCAG 2.2 AAA
         # --chrome-options="no-sandbox" passes --no-sandbox to the Chromium
         # process launched by the axe-core CLI. Required on GitHub Actions
         # runners which run as root.
-        run: axe "http://localhost:8080" --tags wcag2a,wcag2aa,wcag2aaa,wcag22aa,wcag22aaa --chrome-options="no-sandbox"
+        run: |
+          if [ -n "${CHROMEDRIVER_PATH:-}" ]; then
+            axe "http://localhost:8080" --tags wcag2a,wcag2aa,wcag2aaa,wcag22aa,wcag22aaa --chrome-options="no-sandbox" --chromedriver-path "$CHROMEDRIVER_PATH"
+          else
+            axe "http://localhost:8080" --tags wcag2a,wcag2aa,wcag2aaa,wcag22aa,wcag22aaa --chrome-options="no-sandbox"
+          fi
