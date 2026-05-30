@@ -1,0 +1,76 @@
+# Deploy to GitHub Pages.
+# Runs on every push to main and on manual dispatch.
+#
+# Team standard for unbundled static sites; see
+# AgentTeam/docs/patterns/github-pages-deploy.md.
+#
+# Activation (one-time): GitHub > Settings > Pages > Build and deployment >
+# Source > "GitHub Actions". Must be set to "workflow" mode, not "branch".
+#
+# No untrusted GitHub context variables are interpolated into run steps.
+#
+# Action SHAs pinned on 2026-05-30. Re-pin when updating major versions.
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deploy at a time; cancel in-progress if a new push arrives.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - name: Assemble site
+        # Copy only the files the browser needs. Excludes all dev tooling,
+        # documentation, configuration, and team-memory files.
+        run: |
+          mkdir _site
+          rsync -av \
+            --exclude='_site' \
+            --exclude='CLAUDE.md' \
+            --exclude='node_modules' \
+            --exclude='.github' \
+            --exclude='docs' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='eslint.config.js' \
+            --exclude='.stylelintrc.json' \
+            --exclude='.htmlvalidate.json' \
+            --exclude='release-please-config.json' \
+            --exclude='.release-please-manifest.json' \
+            --exclude='CHANGELOG.md' \
+            . _site/
+
+      - name: Configure Pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d  # v6.0.0
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128  # v5.0.0

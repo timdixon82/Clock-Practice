@@ -6,8 +6,29 @@ node_modules/
 npm-debug.log*
 .npm
 
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+
 # macOS finder artefacts
 .DS_Store
+
+# iCloud Drive sync conflict copies — created when iCloud detects a conflict.
+# These are sync artefacts, never intentional, and never belong in the repo.
+* 2.*
+* 3.*
+* 4.*
+* 5.*
+
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
 
 # Editor artefacts
 .vscode/
