@@ -1,3 +1,6 @@
+# EditorConfig — see https://editorconfig.org
+# Keeps formatting consistent across editors.
+
 root = true
 
 [*]
@@ -9,4 +12,11 @@ indent_style = space
 indent_size = 2
 
 [*.md]
+# Markdown can use trailing spaces to force a line break.
 trim_trailing_whitespace = false
+
+[*.php]
+indent_size = 4
+
+[Makefile]
+indent_style = tab
