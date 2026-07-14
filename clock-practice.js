@@ -1,5 +1,15 @@
 'use strict';
 
+import {
+  randomTime,
+  handAngles,
+  formatTime,
+  isCorrectAnswer,
+  getHint,
+  wrapHour,
+  wrapMinute,
+} from './clock-logic.js';
+
 let currentHour = 3;
 let currentMinute = 0;
 let userHour = 12;
@@ -73,11 +83,9 @@ function init() {
 }
 
 function newClock() {
-  currentHour = Math.floor(Math.random() * 12) + 1;
-  currentMinute = Math.floor(Math.random() * 12) * 5;
+  ({ hour: currentHour, minute: currentMinute } = randomTime());
 
-  const minuteAngle = currentMinute * 6;
-  const hourAngle = (currentHour % 12) * 30 + currentMinute * 0.5;
+  const { hourAngle, minuteAngle } = handAngles(currentHour, currentMinute);
 
   document.getElementById('hour-hand').setAttribute('transform', `rotate(${hourAngle} 100 100)`);
   document.getElementById('minute-hand').setAttribute('transform', `rotate(${minuteAngle} 100 100)`);
@@ -100,17 +108,13 @@ function newClock() {
 
 function changeHour(delta) {
   if (solved) return;
-  userHour += delta;
-  if (userHour > 12) userHour = 1;
-  if (userHour < 1) userHour = 12;
+  userHour = wrapHour(userHour, delta);
   updateDisplay();
 }
 
 function changeMinute(delta) {
   if (solved) return;
-  userMinute += delta;
-  if (userMinute >= 60) userMinute = 0;
-  if (userMinute < 0) userMinute = 55;
+  userMinute = wrapMinute(userMinute, delta);
   updateDisplay();
 }
 
@@ -130,7 +134,7 @@ function checkAnswer() {
 
   const feedback = document.getElementById('feedback');
 
-  if (userHour === currentHour && userMinute === currentMinute) {
+  if (isCorrectAnswer(userHour, userMinute, currentHour, currentMinute)) {
     solved = true;
     correctCount++;
     document.getElementById('correct-count').textContent = correctCount;
@@ -166,20 +170,9 @@ function checkAnswer() {
     launchConfetti();
   } else {
     feedback.className = 'feedback wrong';
-    let hint;
-    if (userHour !== currentHour && userMinute !== currentMinute) {
-      hint = 'Have another look at both hands.';
-    } else if (userHour !== currentHour) {
-      hint = 'Check the short hand — that one shows the hour.';
-    } else {
-      hint = 'Check the long hand — that one shows the minutes.';
-    }
+    const hint = getHint(userHour, userMinute, currentHour, currentMinute);
     feedback.textContent = `Not quite! ${hint} Try again`;
   }
-}
-
-function formatTime(h, m) {
-  return `${h}:${m.toString().padStart(2, '0')}`;
 }
 
 function launchConfetti() {

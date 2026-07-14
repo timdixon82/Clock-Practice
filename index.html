@@ -13,7 +13,11 @@
 </head>
 <body>
 
+<header>
 <h1><span aria-hidden="true">🕐</span> Clock Practice <span aria-hidden="true">🕐</span></h1>
+</header>
+
+<main>
 
 <div class="stats" role="group" aria-label="Game statistics">
   <div class="stat-box">
@@ -69,7 +73,7 @@
 
   <button class="primary" type="button" id="check-btn">Check My Answer</button>
 
-  <div class="feedback empty" id="feedback" role="status" aria-live="assertive"></div>
+  <div class="feedback empty" id="feedback" role="status"></div>
 
   <div class="actions">
     <button class="secondary" type="button" id="new-clock-btn">New Clock</button>
@@ -77,7 +81,9 @@
   </div>
 </div>
 
-<script src="clock-practice.js" defer></script>
+</main>
+
+<script type="module" src="clock-practice.js"></script>
 
 <script data-goatcounter="https://timdixon82.goatcounter.com/count"
         async src="./assets/analytics/count.js"></script>
