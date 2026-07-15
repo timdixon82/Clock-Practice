@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/timdixon82/Clock-Practice/compare/v0.3.0...v0.3.1) (2026-07-15)
+
+
+### Bug Fixes
+
+* add dependabot cooldown block to satisfy semgrep dependabot-missing-cooldown rule ([#29](https://github.com/timdixon82/Clock-Practice/issues/29)) ([330726b](https://github.com/timdixon82/Clock-Practice/commit/330726b2f18bb3cc0d604bb8fc1fa3fa003bb90e))
+
 ## [0.3.0](https://github.com/timdixon82/Clock-Practice/compare/v0.2.0...v0.3.0) (2026-05-30)
 
 
