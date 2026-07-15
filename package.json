@@ -7,14 +7,16 @@
   "scripts": {
     "lint:html": "html-validate index.html",
     "lint:css": "stylelint styles.css",
-    "lint:js": "eslint clock-practice.js",
-    "lint": "npm run lint:html && npm run lint:css && npm run lint:js"
+    "lint:js": "eslint clock-practice.js clock-logic.js tests",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "test": "vitest run"
   },
   "devDependencies": {
     "eslint": "^10.4.1",
     "globals": "^17.6.0",
     "html-validate": "^11.5.3",
     "stylelint": "^17.13.0",
-    "stylelint-config-standard": "^40.0.0"
+    "stylelint-config-standard": "^40.0.0",
+    "vitest": "^3.0.0"
   }
 }
