@@ -12,11 +12,11 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "eslint": "^10.4.1",
-    "globals": "^17.6.0",
-    "html-validate": "^11.5.3",
-    "stylelint": "^17.13.0",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
+    "html-validate": "^11.5.5",
+    "stylelint": "^17.14.0",
     "stylelint-config-standard": "^40.0.0",
-    "vitest": "^3.0.0"
+    "vitest": "^4.1.10"
   }
 }
