@@ -6,7 +6,7 @@
 
 Preamble fields:
 
-- Status: `active`
+- Status: `done`
 - Branch: `chore/fix-cleanup-branches-script` (to be created by Sean)
 - Mockup mode: D (dev tooling script, no UI)
 - Priority: 3
@@ -34,11 +34,13 @@ Rollback: the script is only ever run manually by Tim, never by an agent or in C
 
 ## Definition of done
 
-- [ ] `scripts/cleanup-branches.sh` is committed to the repository.
-- [ ] Running `--dry-run` against a repo with a remote `origin/HEAD` symbolic ref no longer lists `HEAD -> origin/main` (or any symbolic-ref artifact) as a branch to delete.
-- [ ] Running `--dry-run` still correctly lists genuinely merged local and remote branches, excluding `main` and `release-please-*`.
-- [ ] Carol's functional test confirms both of the above on a real or simulated branch set.
-- [ ] Pull request opened, conformance check passed, and Sonja has brought it to Tim for merge approval.
+- [x] `scripts/cleanup-branches.sh` is committed to the repository.
+- [x] Running `--dry-run` against a repo with a remote `origin/HEAD` symbolic ref no longer lists `HEAD -> origin/main` (or any symbolic-ref artifact) as a branch to delete.
+- [x] Running `--dry-run` still correctly lists genuinely merged local and remote branches, excluding `main` and `release-please-*`.
+- [x] Carol's functional test confirms both of the above on a real or simulated branch set.
+- [x] Pull request opened, conformance check passed, and Sonja has brought it to Tim for merge approval.
+
+Merged as PR #37 (2026-07-18). At Tim's request, the related one-off script `scripts/clock-practice-branch-cleanup.sh` (for the 9 specific stale branches) was also added to the same PR before merge, superseding the earlier out-of-scope note below.
 
 ## Approved GitHub actions
 
