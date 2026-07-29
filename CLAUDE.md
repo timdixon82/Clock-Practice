@@ -41,7 +41,7 @@ The missing response headers that GitHub Pages cannot provide are documented as 
 
 ## Accessibility
 
-The project targets WCAG 2.2 at AAA conformance. Carol's baseline audit is in `.claude/work/004-clock-practice-setup/carol-baseline-audit.md`. Outstanding accessibility findings are out of scope for work 004 and will be addressed in a dedicated accessibility phase.
+The project targets WCAG 2.2 at AAA conformance. A summary of Carol's baseline audit, including outstanding findings, is recorded in `docs/accessibility.md`. Outstanding accessibility findings remain out of scope for now and will be addressed in a dedicated accessibility phase.
 
 ## Branch and pull request conventions
 
