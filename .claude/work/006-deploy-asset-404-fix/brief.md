@@ -6,7 +6,7 @@ The live site at https://projects.timdixon.net/Clock-Practice/ serves only `inde
 
 Preamble fields:
 
-- Status: `active` (Carol's testing complete, PASS; awaiting Tim's merge approval)
+- Status: `done` (merged as commit 48de141; live site verified serving all assets at HTTP 200)
 - Branch: `fix/deploy-asset-layout` (Sean to create)
 - Mockup mode: D (bug fix, no UI change)
 - Priority: 1
@@ -48,7 +48,7 @@ Rollback: revert the merge commit on `main`; the previous flat-file layout and i
 - [x] `package.json` lint scripts (`lint:css`, any others referencing old paths) updated to the new paths.
 - [x] CLAUDE.md "Source files" list updated to reflect new paths.
 - [x] CI (lint, accessibility, playwright) passes on the branch.
-- [ ] After merge, the live site at https://projects.timdixon.net/Clock-Practice/ serves `styles/styles.css`, `scripts/clock-practice.js`, `scripts/clock-logic.js`, and `assets/favicon.svg` with HTTP 200, and the page renders styled and functional. (pending post-merge smoke check)
+- [x] After merge, the live site at https://projects.timdixon.net/Clock-Practice/ serves `styles/styles.css`, `scripts/clock-practice.js`, `scripts/clock-logic.js`, and `assets/favicon.svg` with HTTP 200, and the page renders styled and functional. Verified post-merge.
 - [x] Carol's functional and accessibility passes both sign off.
 
 ## Approved GitHub actions
