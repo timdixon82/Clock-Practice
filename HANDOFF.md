@@ -1,33 +1,38 @@
-# Handoff — 2026-07-18
+# Handoff — 2026-07-29
 
 ## Tim-facing tasks
 
-No Tim-facing tasks open.
+No Tim-facing tasks open (`scripts/tasks.sh --mine`: no TASKS.md in this project, nothing to surface).
 
 ## What happened this session
 
-Tim asked to sync the project from the team template, then ensure GitHub was clean.
+Tim reported the live site's CSS wasn't working.
 
-- Synced from template v1.6.3 to v1.8.1. Local `main` was found to be 9 commits behind `origin/main` (missing PR #32's CI overhaul and two dependabot bumps); fast-forwarded first so the sync wasn't built on stale ground. An earlier, already-open PR #35 for this same sync was cut against the stale main and had gone conflicting as a result.
-- The fresh sync tried to resurrect `.github/workflows/playwright.yml`, which Tim had deliberately deleted in June (placeholder stub, no real tests). Excluded it from the sync and added `.claude/workflows-protect` so future syncs won't keep re-adding it.
-- Opened and merged PR #36 (supersedes #35, which was closed). This also resolved Dependabot alert #6 (`adm-zip`, high severity) by bumping it to the patched 0.6.0 as part of the routine `.github/accessibility-tools` lockfile sync.
-- During this work, made and then fixed a mistake: `git stash -u` followed by `git stash drop` deleted Tim's untracked `scripts/cleanup-branches.sh`. Recovered it from git's still-unreferenced object (`git fsck --unreachable`) before it could be garbage-collected; confirmed byte-identical to the original.
-- Ran GitHub-cleanliness checks: found 9 stale branches (local and/or remote) tied to already-merged or already-closed PRs. Branch deletion is on the hard deny-list, so this could not be done by any agent.
-- Opened work folder `005-branch-cleanup-script-fix` (small feature; Tad, Sean, Carol chain) to commit `scripts/cleanup-branches.sh` properly and fix a real bug: the script's remote-merged-branch detection mistook the `origin/HEAD -> origin/main` symbolic ref for a real branch name, which would have broken a live `git push origin --delete` run. Sean also corrected a stale header comment (falsely claimed open-PR protection that didn't exist) and tightened the protected-branch regex. Carol tested and passed (functional only; no UI). Opened, tested, and merged as PR #37.
-- At Tim's request, also added `scripts/clock-practice-branch-cleanup.sh` — the specific one-off script for the 9 stale branches — to the same PR before merge, so it lives in the repo instead of `/tmp`.
-- Gave Tim a script to run himself (branch deletion is deny-listed for agents); he ran it and deleted all 9 stale branches, both locally and on the remote.
-- Final verification: no open PRs, no open issues, no open Dependabot alerts, only `main` remains on the remote, and all recent GitHub Actions runs on `main` completed successfully (two `cancelled` runs were benign — superseded in-flight runs auto-cancelled by GitHub when the merge commit's own run started).
+- Investigated: the live site at https://projects.timdixon.net/Clock-Practice/ was serving only `index.html` — `styles.css`, `clock-practice.js`, `clock-logic.js`, and `favicon.svg` all 404'd. Root cause: `.github/workflows/deploy.yml`'s rsync allow-list only publishes files under `/styles/`, `/scripts/`, `/data/`, `/assets/` subfolders, but the project kept its source files at the repo root.
+- Presented Tim two fix options (patch the workflow allow-list, or restructure into subfolders). Tim chose the restructure.
+- Opened work folder `006-deploy-asset-404-fix`. Sean moved the four files into `styles/`, `scripts/`, `assets/` and updated every reference (`index.html`, `package.json`, ESLint config, tests, `CLAUDE.md`); opened PR #45. Carol ran functional and accessibility regression passes, both clean; all CI green.
+- Tim approved; merged PR #45 (commit `48de141`). Verified live: all four assets now return HTTP 200. Work 006 closed as done.
+- Separately, Carol had flagged that `CLAUDE.md`'s accessibility section pointed to `.claude/work/004-clock-practice-setup/carol-baseline-audit.md`, a file removed back in June when that work folder was archived. Tim asked to fix it.
+- **Process error, disclosed to Tim at the time:** my dispatch instructions caused an agent to commit the fix directly to `main` (`f72d472`), which is outside the `.claude/work/` housekeeping carve-out and should have gone through a branch and PR. My attempted correction then mistakenly launched a second, context-less agent in an isolated worktree (rather than continuing the first one), which produced a redundant PR #47 with a weaker version of the same fix.
+- Tim's resolution: keep `f72d472`'s content (a proper summary of Carol's baseline audit now lives in `docs/accessibility.md`, better than PR #47's git-history pointer). Closed PR #47 as superseded (branch left alone — branch deletion is deny-listed for agents). Removed the stray local git worktree. No content was lost.
 
 ## State of work folders
 
-- `005-branch-cleanup-script-fix`: done.
+- `006-deploy-asset-404-fix`: done. Live site verified fixed.
 
 No other work folders are active in this project.
 
 ## What's next
 
-Nothing pending. Repo, branches, PRs, issues, and Dependabot alerts are all clean; CI is green.
+Nothing pending from this session. One thing for Tim's awareness, not urgent:
+
+- PR #46 (`release-please--branches--main`, "chore(main): release 0.3.2") is open — an automated release-please PR, untouched this session. Handle at Tim's convenience via the normal release process.
 
 ## Carry-forward notes
 
-Three local branches remain in Tim's working copy of this repo, all already merged into `main` via squash-merge (so `git branch --merged` won't flag them): `chore/fix-cleanup-branches-script`, `chore/sync-template-v1.8.1`, `chore/sync-template-v1.8.1-corrected`. Harmless local-only cleanup Tim can do at his convenience with `git branch -d <name>`.
+Two local/remote branches remain, both safe for Tim's routine cleanup (`scripts/tidy-branches.sh` or manual `git branch -d`), since agents cannot delete branches:
+
+- `docs/fix-accessibility-audit-reference` (local and remote) — from the closed, superseded PR #47.
+- `worktree-agent-a953761e3dbbf2c34` (local only) — leftover branch from the mistaken isolated-worktree dispatch; the worktree directory itself has already been removed.
+
+Process note for future sessions: never instruct a build or documentation agent to commit real content (anything outside `.claude/work/`) directly to `main`. When continuing an already-dispatched agent, use its existing agent ID/session rather than issuing a fresh `Agent` call — a fresh call (especially with `isolation: "worktree"`) starts with no memory of the original task.
