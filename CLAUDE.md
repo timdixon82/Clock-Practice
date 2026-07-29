@@ -13,9 +13,10 @@ Static front-end: HTML, CSS, and JavaScript, running entirely in the browser. No
 Source files:
 
 - `index.html` — page structure
-- `styles.css` — all styles
-- `clock-practice.js` — all behaviour
-- `favicon.svg` — the clock favicon
+- `styles/styles.css` — all styles
+- `scripts/clock-practice.js` — all behaviour
+- `scripts/clock-logic.js` — pure clock logic (time formulas, answer checking)
+- `assets/favicon.svg` — the clock favicon
 
 ## Architecture decisions
 

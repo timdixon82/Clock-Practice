@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "lint:html": "html-validate index.html",
-    "lint:css": "stylelint styles.css",
-    "lint:js": "eslint clock-practice.js clock-logic.js tests",
+    "lint:css": "stylelint styles/styles.css",
+    "lint:js": "eslint scripts/clock-practice.js scripts/clock-logic.js tests",
     "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
     "test": "vitest run"
   },

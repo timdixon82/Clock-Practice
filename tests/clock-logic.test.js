@@ -24,7 +24,7 @@ import {
   getHint,
   wrapHour,
   wrapMinute,
-} from '../clock-logic.js';
+} from '../scripts/clock-logic.js';
 
 // Independent reference implementation of the standard analog clock hand
 // formula, written separately from handAngles so a shared bug would not

@@ -1,6 +1,6 @@
 // ESLint flat config (ESLint 9+).
 // clock-practice.js and clock-logic.js run in the browser as ES modules
-// (index.html loads clock-practice.js with <script type="module">).
+// (index.html loads scripts/clock-practice.js with <script type="module">).
 // Browser globals come from the `globals` package (a development dependency),
 // so the no-undef rule catches real undefined references without a hand-kept list.
 
@@ -8,7 +8,7 @@ import globals from 'globals';
 
 export default [
   {
-    files: ['clock-practice.js', 'clock-logic.js'],
+    files: ['scripts/clock-practice.js', 'scripts/clock-logic.js'],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',
