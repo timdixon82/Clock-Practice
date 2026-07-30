@@ -13,3 +13,27 @@
 - [2026-07-30 18:58:40] subagent completed
 - [2026-07-30 18:59:12] subagent completed
 - [2026-07-30 18:59:44] subagent completed
+- [2026-07-30 19:00:16] subagent completed
+- [2026-07-30 19:00:44] subagent completed
+- 2026-07-30: Sean opened PR #50 (`fix/dark-mode-clock-visibility`): added `<meta name="color-scheme" content="light">` to index.html and `color-scheme: light;` to the html/body rule in styles.css. Verified against Chromium's real force-dark feature (`--enable-features=WebContentsForceDark`, not the low-level test-only flag that gave a false negative first try), confirmed light-mode render is pixel-unaffected, and confirmed forced-colors/high-contrast mode still works exactly as Carol's baseline. No CSP change needed, no architecture/security escalation flagged. Committing Carol's diagnosis evidence files (previously untracked) directly to main as work-folder housekeeping. Dispatching Carol to retest the PR branch (functional + accessibility) before this goes to Tim for merge approval.
+- [2026-07-30 19:02:09] subagent completed
+- [2026-07-30 19:02:40] subagent completed
+- [2026-07-30 19:03:12] subagent completed
+- [2026-07-30 19:03:44] subagent completed
+- [2026-07-30 19:04:18] subagent completed
+- [2026-07-30 19:04:52] subagent completed
+- [2026-07-30 19:05:24] subagent completed
+- [2026-07-30 19:05:57] subagent completed
+- [2026-07-30 19:06:29] subagent completed
+- [2026-07-30 19:06:41] subagent completed
+- [2026-07-30 19:07:35] subagent completed
+- [2026-07-30 19:08:07] subagent completed
+- [2026-07-30 19:08:24] subagent completed
+- 2026-07-30: Carol's retest of PR #50 (dark-mode fix only) is a full PASS: functional clean, accessibility byte-identical to main (zero regression, Pa11y WCAG2AAA), dark-mode repaint fix verified against the real Chromium mechanism, light mode proven pixel-identical to main (max diff 0), forced-colors/high-contrast mode unaffected. Full report in carol-retest.md. Tim then separately flagged that the white circular backdrop behind the clock face was rendering as a stretched oval, visible in his original screenshots. Diagnosed: `.clock-container` in styles.css had no `width`, so as a normal block element it filled its parent's width while height stayed fixed to content, and `border-radius: 50%` produced an ellipse. Dispatched Sean back onto the same branch/PR to add `width: fit-content` and verify the circle holds at both breakpoints.
+- 2026-07-30: Sean pushed commit e1ce313 on `fix/dark-mode-clock-visibility`: added `width: fit-content;` to `.clock-container`. Verified via screenshot at 800px (352x352 box, true circle) and 340px (294x294 box, triggers the small-screen breakpoint, still a true circle). No other layout regression observed. PR #50 now carries both fixes. Next: Carol to run one more combined visual check, then to Tim for merge approval.
+- [2026-07-30 19:09:56] subagent completed
+- [2026-07-30 19:10:28] subagent completed
+- [2026-07-30 19:11:04] subagent completed
+- [2026-07-30 19:11:05] subagent completed
+- 2026-07-30: Carol's final combined check on PR #50 is a PASS: oval fix confirmed square at both normal (352x352px) and narrow 340px (294x294px) viewports, dark-mode fix retested still intact after the new commit, functional smoke check clean, no new console errors, no accessibility regression from the additive-only CSS change. All CI checks green (Pa11y/axe AAA, Playwright, build, dependency-review, lint, semgrep, trivy). PR is MERGEABLE. Merge gate satisfied; bringing to Tim for approval.
+- 2026-07-30: Sonja corrected a process slip: the housekeeping commit recording Carol's final PASS had been made directly on `fix/dark-mode-clock-visibility` instead of `main`. Cherry-picked it onto `main`, reverted it on the feature branch (the deny-list blocks history rewriting even locally, so a revert was used instead of a reset), pushed both, then merged `main` back into the feature branch to resolve the resulting log.md conflict so PR #50 stays mergeable. No change to index.html or styles/styles.css from this correction.
