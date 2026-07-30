@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.3](https://github.com/timdixon82/Clock-Practice/compare/v0.3.2...v0.3.3) (2026-07-30)
+
+
+### Bug Fixes
+
+* **styles:** opt page out of browser force-dark repaint ([9abf4aa](https://github.com/timdixon82/Clock-Practice/commit/9abf4aaeec3b6d382ff0d77b75667d107e121b98))
+* **styles:** opt page out of browser force-dark repaint ([69934cc](https://github.com/timdixon82/Clock-Practice/commit/69934cce14be15b92e9f681293f417d9aa569545))
+* **styles:** re-center clock-container after fit-content width change ([0309bc7](https://github.com/timdixon82/Clock-Practice/commit/0309bc7239bd916a7e3ddcc792af3cb63d064e7a))
+* **styles:** re-center clock-container after fit-content width change ([32dba83](https://github.com/timdixon82/Clock-Practice/commit/32dba83075cbb1681cabbf880653d73b3929aeee))
+* **styles:** shrink-wrap clock-container to prevent ellipse distortion ([e1ce313](https://github.com/timdixon82/Clock-Practice/commit/e1ce31373826a22c77d714837e25ad9abfd8b82d))
+
 ## [0.3.2](https://github.com/timdixon82/Clock-Practice/compare/v0.3.1...v0.3.2) (2026-07-29)
 
 
