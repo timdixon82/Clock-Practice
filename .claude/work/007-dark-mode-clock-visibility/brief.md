@@ -6,7 +6,7 @@ Tim reports the site "looks terrible" and the clock hands don't show when the br
 
 Preamble fields:
 
-- Status: `active`
+- Status: `done`
 - Branch: `fix/dark-mode-clock-visibility`
 - Mockup mode: D (bug fix to existing visuals; no new UI, skip mockup phase)
 - Priority: 1
