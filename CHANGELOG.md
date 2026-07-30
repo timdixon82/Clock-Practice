@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2](https://github.com/timdixon82/Clock-Practice/compare/v0.3.1...v0.3.2) (2026-07-29)
+
+
+### Bug Fixes
+
+* **deploy:** move source files into styles/scripts/assets layout ([48de141](https://github.com/timdixon82/Clock-Practice/commit/48de141b507df5c2656ca80b005fc99d66a5b0c2))
+* **deploy:** move source files into styles/scripts/assets subfolders ([9459da3](https://github.com/timdixon82/Clock-Practice/commit/9459da3ff38219756a420c73d2f6049c4efcce8e))
+
 ## [0.3.1](https://github.com/timdixon82/Clock-Practice/compare/v0.3.0...v0.3.1) (2026-07-15)
 
 
