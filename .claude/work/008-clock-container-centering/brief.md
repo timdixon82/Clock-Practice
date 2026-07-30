@@ -6,7 +6,7 @@ Regression from work item 007: giving `.clock-container` `width: fit-content` (t
 
 Preamble fields:
 
-- Status: `active`
+- Status: `done`
 - Branch: `fix/clock-container-centering`
 - Mockup mode: D (one-line CSS regression fix, no new UI)
 - Priority: 1
