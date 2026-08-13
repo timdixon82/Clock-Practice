@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "eslint": "^10.8.0",
-    "globals": "^17.8.0",
-    "html-validate": "^11.6.0",
+    "globals": "^17.9.0",
+    "html-validate": "^11.6.2",
     "stylelint": "^17.14.1",
     "stylelint-config-standard": "^40.0.0",
     "vitest": "^4.1.10"
