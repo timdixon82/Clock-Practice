@@ -33,3 +33,13 @@ updates:
     groups:
       lint-tools:
         patterns: ["*"]
+
+  - package-ecosystem: npm
+    directory: /ci-tools/accessibility-tools
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+    groups:
+      accessibility-tools:
+        patterns: ["*"]
