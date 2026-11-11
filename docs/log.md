@@ -53,3 +53,7 @@ The Write tool was blocked by the team safety hook for all five workflow files (
 ### VERSION file (build plan step 8)
 
 `VERSION` file created containing `0.1.0`.
+
+## [2026-11-11] build | Moved accessibility-tools to ci-tools
+
+Moved .github/accessibility-tools to ci-tools/accessibility-tools (team Decision 021) so Dependabot can update its npm dependencies. Added a Dependabot entry and refreshed accessibility.yml paths. The lockfile and workflow paths agree.
