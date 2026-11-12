@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.4](https://github.com/timdixon82/Clock-Practice/compare/v0.3.3...v0.3.4) (2026-11-12)
+
+
+### Bug Fixes
+
+* **deps:** clear Dependabot alerts in dev dependencies ([#81](https://github.com/timdixon82/Clock-Practice/issues/81)) ([25a2313](https://github.com/timdixon82/Clock-Practice/commit/25a231363d0dac760271d9562ff791d609f1cf07))
+* use the bare file name in workflows-protect so the sync matches it ([#88](https://github.com/timdixon82/Clock-Practice/issues/88)) ([313d617](https://github.com/timdixon82/Clock-Practice/commit/313d6174f6aa069c01131c6080d8c9fe647bbcd6))
+
 ## [0.3.3](https://github.com/timdixon82/Clock-Practice/compare/v0.3.2...v0.3.3) (2026-07-31)
 
 
